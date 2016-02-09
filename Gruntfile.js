@@ -7,10 +7,12 @@ module.exports = function(grunt) {
     var proxyRe = /\/proxy\/proxy.ashx/i;
 
     var enableCORS = function(req, res, next) {
-      res.setHeader('Access-Control-Allow-Origin', req.headers.origin);
+      // res.setHeader('Access-Control-Allow-Origin', req.headers.origin);
+      res.setHeader('Access-Control-Allow-Origin', '*');
       res.setHeader('Access-Control-Allow-Credentials', true);
       res.setHeader('Access-Control-Allow-Methods', 'GET,HEAD,PUT,PATCH,POST,DELETE');
-      res.setHeader('Access-Control-Allow-Headers', req.headers['access-control-request-headers']);
+      //res.setHeader('Access-Control-Allow-Headers', req.headers['access-control-request-headers']);
+      res.setHeader('Access-Control-Allow-Headers', '*');
       return next();
     };
 
