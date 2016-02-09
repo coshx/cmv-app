@@ -25,8 +25,8 @@ define([
     // map options, passed to map constructor. see: https://developers.arcgis.com/javascript/jsapi/map-amd.html#map1
     mapOptions: {
       basemap: 'streets',
-      center: [-96.59179687497497, 39.09596293629694],
-      zoom: 5,
+      center: [-122.676207, 45.523452],
+      zoom: 12,
       sliderStyle: 'small'
     },
     // panes: {
@@ -60,35 +60,15 @@ define([
     // operationalLayers: Array of Layers to load on top of the basemap: valid 'type' options: 'dynamic', 'tiled', 'feature'.
     // The 'options' object is passed as the layers options for constructor. Title will be used in the legend only. id's must be unique and have no spaces.
     // 3 'mode' options: MODE_SNAPSHOT = 0, MODE_ONDEMAND = 1, MODE_SELECTION = 2
-    operationalLayers: [{
-      type: 'feature',
-      url: 'http://services1.arcgis.com/g2TonOxuRkIqSOFx/arcgis/rest/services/MeetUpHomeTowns/FeatureServer/0',
-      title: 'STLJS Meetup Home Towns',
+    operationalLayers: [ {
+      type: 'dynamic',
+      url: 'http://sampleserver3.arcgisonline.com/ArcGIS/rest/services/Portland/Aerial/ImageServer',
+      title: 'Portland Aerial Views',
       options: {
-        id: 'meetupHometowns',
+        id: 'portlandAerial',
         opacity: 1.0,
         visible: true,
-        outFields: ['*'],
-        mode: 0
-      },
-      editorLayerInfos: {
-        disableGeometryUpdate: false
-      },
-      legendLayerInfos: {
-        exclude: false,
-        layerInfo: {
-          title: 'My layer'
-        }
-      }
-    }, {
-      type: 'feature',
-      url: 'http://sampleserver3.arcgisonline.com/ArcGIS/rest/services/SanFrancisco/311Incidents/FeatureServer/0',
-      title: 'San Francisco 311 Incidents',
-      options: {
-        id: 'sf311Incidents',
-        opacity: 1.0,
-        visible: true,
-        outFields: ['req_type', 'req_date', 'req_time', 'address', 'district'],
+        outFields: ['Shape', 'Name'],
         mode: 0
       }
     }, {
