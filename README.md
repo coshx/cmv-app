@@ -75,3 +75,25 @@ There are many ways to contribute to CMV:
 ## License
 
 [MIT](https://raw.githubusercontent.com/cmv/cmv-app/master/LICENSE)
+
+## Notes
+
+###Dojo
+
+  * **Load modules with `define()`**
+
+```javascript
+define([
+    "dojo/_base/declare",
+    "dojo/dom",
+    "app/dateFormatter"
+], function(declare, dom, dateFormatter){
+    return declare(null, {
+        showDate: function(id, date){
+            dom.byId(id).innerHTML = dateFormatter.format(date);
+        }
+    });
+});
+```
+
+  * 
