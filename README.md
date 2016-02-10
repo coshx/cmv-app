@@ -79,8 +79,11 @@ There are many ways to contribute to CMV:
 ## Notes
 
 ###Dojo
+####Loading and using modules in Dojo
 
   * **Load modules with `define()`**
+    * Notice the callback function has one parameter for each loaded module
+    * The return value is a constructor that can be instantiated using `require()`
 
 ```javascript
 define([
@@ -96,4 +99,41 @@ define([
 });
 ```
 
-  * 
+  * **Use modules with `require()`**
+    * Assuming the prior module was saved as `app/DateManager.js` the below code would load it.
+
+```javascript
+require([
+    "app/DateManager"
+], function(DateManager){
+    var dm = new DateManager();
+    dm.showDate('dateElementId', new Date());
+});
+```
+
+  * **Load plugins with `define()`**
+    * Data after the "!" is passed directly to the plugin for processing. Here is an example where the plugin turns HTML into a string.
+
+```javascript
+// in "my/widget/NavBar.js"
+define([
+    "dojo/_base/declare",
+    "dijit/_WidgetBase",
+    "dijit/_TemplatedMixin",
+    "dojo/text!./templates/NavBar.html"
+], function(declare, _WidgetBase, _TemplatedMixin, template){
+    return declare([_WidgetBase, _TemplatedMixin], {
+        // template contains the content of the file "my/widget/templates/NavBar.html"
+        templateString: template
+    });
+});
+```
+
+####Creating Classes
+The `dojo/_base/declare` module is used to make classes with multiple inheritance.
+
+  * `declare()` accepts three arguments:
+    1. `className`: Named classes are placed in the global namespace
+    2. `superClass`: Argument can be `null`, one existing class, or an array of existing classes
+      * When inheriting from multiple classes, the first class is viewed as the 'prototype' and the rest are 'mixins'
+    3. `properties`: These are methods and properties for the class prototype. These methods will override their namesake if the inherited classes have the ame properties.
