@@ -25,8 +25,8 @@ define([
     // map options, passed to map constructor. see: https://developers.arcgis.com/javascript/jsapi/map-amd.html#map1
     mapOptions: {
       basemap: 'streets',
-      center: [-122.676207, 45.523452],
-      zoom: 12,
+      center: [-103, 40],
+      zoom: 3,
       sliderStyle: 'small'
     },
     // panes: {
@@ -62,50 +62,14 @@ define([
     // 3 'mode' options: MODE_SNAPSHOT = 0, MODE_ONDEMAND = 1, MODE_SELECTION = 2
     operationalLayers: [ {
       type: 'dynamic',
-      url: 'http://sampleserver3.arcgisonline.com/ArcGIS/rest/services/Portland/Aerial/ImageServer',
-      title: 'Portland Aerial Views',
+      url: 'http://sampleserver3.arcgisonline.com/ArcGIS/rest/services/Hurricanes/NOAA_Tracks_1851_2007/MapServer/',
+      title: 'Hurricane Tracks 1851-2007',
       options: {
-        id: 'portlandAerial',
+        id: 'hurricaneTracks',
         opacity: 1.0,
         visible: true,
-        outFields: ['Shape', 'Name'],
+        outFields: ['BTID', 'NAME', 'LAT', 'LONG', 'WIND_KTS', 'CAT', 'PRESSURE'],
         mode: 0
-      }
-    }, {
-      type: 'dynamic',
-      url: 'http://sampleserver1.arcgisonline.com/ArcGIS/rest/services/PublicSafety/PublicSafetyOperationalLayers/MapServer',
-      title: 'Louisville Public Safety',
-      options: {
-        id: 'louisvillePubSafety',
-        opacity: 1.0,
-        visible: true,
-        imageParameters: imageParameters
-      },
-      identifyLayerInfos: {
-        layerIds: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
-      },
-      legendLayerInfos: {
-        layerInfo: {
-          hideLayers: [21]
-        }
-      }
-    }, {
-      type: 'dynamic',
-      url: 'http://sampleserver6.arcgisonline.com/arcgis/rest/services/DamageAssessment/MapServer',
-      title: 'Damage Assessment',
-      options: {
-        id: 'DamageAssessment',
-        opacity: 1.0,
-        visible: true,
-        imageParameters: imageParameters
-      },
-      legendLayerInfos: {
-        exclude: true
-      },
-      layerControlLayerInfos: {
-        swipe: true,
-        metadataUrl: true,
-        expanded: true
       }
     }],
     // set include:true to load. For titlePane type set position the the desired order in the sidebar

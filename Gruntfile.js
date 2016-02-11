@@ -8,11 +8,11 @@ module.exports = function(grunt) {
 
     var enableCORS = function(req, res, next) {
       // res.setHeader('Access-Control-Allow-Origin', req.headers.origin);
-      res.setHeader('Access-Control-Allow-Origin', '*');
+      res.setHeader('Access-Control-Allow-Origin', 'localhost:3000');
       res.setHeader('Access-Control-Allow-Credentials', true);
       res.setHeader('Access-Control-Allow-Methods', 'GET,HEAD,PUT,PATCH,POST,DELETE');
-      //res.setHeader('Access-Control-Allow-Headers', req.headers['access-control-request-headers']);
-      res.setHeader('Access-Control-Allow-Headers', '*');
+      // res.setHeader('Access-Control-Allow-Headers', req.headers['access-control-request-headers']);
+      res.setHeader('Access-Control-Allow-Headers', 'localhost:3000');
       return next();
     };
 

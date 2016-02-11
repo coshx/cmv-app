@@ -3,34 +3,14 @@ define({
   zoomExtentFactor: 2,
   queries: [
     {
-      description: 'Find SF 311 incident by status',
-      url: 'http://sampleserver3.arcgisonline.com/ArcGIS/rest/services/SanFrancisco/311Incidents/FeatureServer/0',
+      description: 'Find hurricane traces by wind speed',
+      url: 'http://sampleserver3.arcgisonline.com/ArcGIS/rest/services/Hurricanes/NOAA_Tracks_1851_2007/MapServer/',
       layerIds: [0],
-      searchFields: ['status'],
-      minChars: 1,
-      gridColumns: [
-	{ field: 'req_type', label: 'Type' },
-        { field: 'district', label: 'District '}
-      ],
-      sort: [
-	{
-	  attribute: 'req_type',
-	  descending: false
-	}
-      ],
-      prompt: '1 = new; 2 = open; 3 = closed',
-      selectionMode: 'single'
-    },
-    {
-      description: 'Find A Public Safety Location By Name',
-      url: 'http://sampleserver1.arcgisonline.com/ArcGIS/rest/services/PublicSafety/PublicSafetyOperationalLayers/MapServer',
-      layerIds: [1, 2, 3, 4, 5, 6, 7],
-      searchFields: ['FDNAME, PDNAME', 'NAME', 'RESNAME'],
+      searchFields: ['WIND_KTS'],
       minChars: 2,
       gridColumns: [
 	{ field: 'Name', label: 'Name' },
-	{ field: 'layerName', label: 'Layer', width: 100, sortable: false, resizable: false },
-        { field: 'OBJECTID', label: 'ID', width: 100 }
+        { field: 'Wind Speed', label: 'Wind Speed'}
       ],
       sort: [
 	{
@@ -38,19 +18,36 @@ define({
 	  descending: false
 	}
       ],
-      prompt: 'fdname, pdname, name or resname',
+      prompt: 'speed in knots',
       selectionMode: 'single'
     },
     {
-      description: 'Find Incident By Code/Description',
-      url: 'http://sampleserver1.arcgisonline.com/ArcGIS/rest/services/PublicSafety/PublicSafetyOperationalLayers/MapServer',
-      layerIds: [15, 17, 18],
-      searchFields: ['FCODE', 'DESCRIPTION'],
+      description: 'Find hurricane traces by category',
+      url: 'http://sampleserver3.arcgisonline.com/ArcGIS/rest/services/Hurricanes/NOAA_Tracks_1851_2007/MapServer/',
+      layerIds: [0],
+      searchFields: ['CAT'],
+      minChars: 1,
+      gridColumns: [
+	{ field: 'Name', label: 'Name' },
+        { field: 'Category', label: 'Category' }
+      ],
+      sort: [
+	{
+	  attribute: 'Name',
+	  descending: false
+	}
+      ],
+      prompt: 'hurricane category (H1-H5)',
+      selectionMode: 'single'
+    },
+    {
+      description: 'Find hurricane traces by year',
+      url: 'http://sampleserver3.arcgisonline.com/ArcGIS/rest/services/Hurricanes/NOAA_Tracks_1851_2007/MapServer/',
+      layerIds: [0],
+      searchFields: ['TRACK_DATE'],
       minChars: 4,
       gridColumns: [
-	{ field: 'layerName', label: 'Layer', width: 100, sortable: false, resizable: false },
-	{ field: 'Fcode', label: 'Fcode', width: 100 },
-	{ field: 'Description', label: 'Descr' },
+	{ field: 'NAME', label: 'Layer', width: 100, sortable: false, resizable: false },
 	{ field: 'SORT_VALUE', visible: false, get: function (findResult){
 	  return findResult.layerName + ' ' + findResult.feature.attributes.Fcode;  //seems better to use attributes[ 'Fcode' ] but fails build.  Attribute names will be aliases and may contain spaces and mixed cases.
 	} }
