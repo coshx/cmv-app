@@ -3,8 +3,14 @@ define([
   'esri/geometry/Extent',
   'esri/config',
   'esri/tasks/GeometryService',
-  'esri/layers/ImageParameters'
-], function (units, Extent, esriConfig, GeometryService, ImageParameters) {
+  'esri/layers/ImageParameters',
+  'esri/urlUtils'
+], function (units, Extent, esriConfig, GeometryService, ImageParameters, urlUtils) {
+  // set proxy configuration rules
+  urlUtils.addProxyRule({
+    urlPrefix: 'http://sampleserver3.arcgisonline.com',
+    proxyUrl: 'http://localhost:8080/proxy/proxy.jsp'
+  });
 
   // url to your proxy page, must be on same machine hosting you app. See proxy folder for readme.
   esriConfig.defaults.io.proxyUrl = 'proxy/proxy.ashx';
