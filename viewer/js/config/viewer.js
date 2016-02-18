@@ -12,9 +12,6 @@ define([
     proxyUrl: 'http://localhost:8080/proxy/proxy.jsp'
   });
 
-  // url to your proxy page, must be on same machine hosting you app. See proxy folder for readme.
-  esriConfig.defaults.io.proxyUrl = 'proxy/proxy.ashx';
-  esriConfig.defaults.io.alwaysUseProxy = false;
   // url to your geometry server.
   esriConfig.defaults.geometryService = new GeometryService('http://tasks.arcgisonline.com/ArcGIS/rest/services/Geometry/GeometryServer');
 
