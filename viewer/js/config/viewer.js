@@ -9,7 +9,7 @@ define([
   // set proxy configuration rules
   urlUtils.addProxyRule({
     urlPrefix: 'http://sampleserver3.arcgisonline.com',
-    proxyUrl: 'http://localhost:8080/proxy/proxy.jsp'
+    proxyUrl: 'http://localhost:3002/proxy/'
   });
 
   // url to your geometry server.
