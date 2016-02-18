@@ -3,9 +3,6 @@ module.exports = function(grunt) {
   // middleware for grunt.connect
   var middleware = function(connect, options, middlewares) {
     // inject a custom middleware into the array of default middlewares for proxy page
-    var proxypage = require('proxypage');
-    var proxyRe = /\/proxy\/proxy.ashx/i;
-
     var enableCORS = function(req, res, next) {
       // res.setHeader('Access-Control-Allow-Origin', req.headers.origin);
       res.setHeader('Access-Control-Allow-Origin', '*');
@@ -16,14 +13,6 @@ module.exports = function(grunt) {
       return next();
     };
 
-    var proxyMiddleware = function(req, res, next) {
-      if (!proxyRe.test(req.url)) {
-        return next();
-      }
-      proxypage.proxy(req, res);
-    };
-
-    middlewares.unshift(proxyMiddleware);
     middlewares.unshift(enableCORS);
     middlewares.unshift(connect.json()); //body parser, see https://github.com/senchalabs/connect/wiki/Connect-3.0
     middlewares.unshift(connect.urlencoded()); //body parser
