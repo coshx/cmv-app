@@ -54,11 +54,6 @@
         <![endif]-->
     <script type="text/javascript" src="//js.arcgis.com/3.14compact/"></script>
     <script type="text/javascript">
-      require(['viewer/Proxy'], function(Proxy){
-        Proxy.startup();
-      });
-    </script>
-    <script type="text/javascript">
       // get the config file from the url if present
       var file = 'config/viewer', s = window.location.search, q = s.match(/config=([^&]*)/i);
       if (q && q.length > 0) {

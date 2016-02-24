@@ -21,6 +21,11 @@ var sourcemaps = require('gulp-sourcemaps');
 var autoprefixer = require('gulp-autoprefixer');
 var minifyCss = require('gulp-minify-css');
 
+var connect = require('gulp-connect');
+//var Proxy = require('gulp-connect-proxy');
+var proxypage = require('proxypage');
+var bodyParser = require('body-parser');
+
 // var source = require('vinyl-source-stream');
 // var browserify = require('gulp-browserify');
 var uglify = require('gulp-uglify');
@@ -32,19 +37,44 @@ var config = {
   srcHtml : 'viewer/*.html',
   distHtml : 'dist/viewer',
   srcJs : 'viewer/js/**/*.js',
-  distJs : 'dist/viewer/js/**/*.js'
+  distJs : 'dist/viewer/js/'
 };
 
-// 'default: 'Watches the project for changes, automatically builds them and runs a web server and opens default browser to preview.', ['jshint', 'connect:dev', 'open:dev_browser', 'watch:dev'])
-
-gulp.task('default', ['copy-html', 'watch', 'jshint', 'build-js', 'build-css'], function() {
+// Copies html, builds javascript and css, runs jshint, watches for changes and runs a web server and opens default browser to preview.
+// TODO: Separate file copying for development and production
+gulp.task('default', ['copy-html', 'copy-js', 'watch', 'jshint', 'build-js', 'build-css'], function() {
   // launch web server
+  connect.server({
+    port: 3000,
+    root: 'viewer',
+    livereload: true
+  });
+  connect.server({
+    middleware: function(connect, opt) {
+      var app = connect();
+      var port = 3002;
+      app.use(bodyParser.text({ type: 'text/html' }));
+      app.use(bodyParser.json({ type: 'application/*+json' }));
+
+      app.use('/proxy', proxypage.proxy);
+
+      app.listen(port, function() {
+        console.log('Connect server listening on port ' + port);
+      });
+    }
+  });
 });
 
 gulp.task('copy-html', function () {
   // copy any html files in viewer to dist/viewer
   gulp.src(config.srcHtml)
     .pipe(gulp.dest(config.distHtml));
+});
+
+gulp.task('copy-js', function () {
+  //copy any javascript files in viewer to dist/viewer
+  gulp.src(config.srcJs)
+    .pipe(gulp.dest(config.distJs));
 });
 
 gulp.task('build-css', function () {
@@ -59,24 +89,26 @@ gulp.task('build-css', function () {
 });
 
 gulp.task('watch', function() {
-  // watch all js files in viewer/, running jshint and building if changed
-  gulp.watch(config.srcCss, ['jshint']);
+  // do we need to be this specific?
+  gulp.watch(config.srcJs, ['jshint', 'build-js']);
+  gulp.watch(config.srcCss, ['build-css']);
+  gulp.watch(config.srcHtml, ['copy-html']);
 });
 
 gulp.task('jshint', function() {
-  return gulp.src('viewer/**/*.js')
+  return gulp.src(config.srcJs)
     .pipe(jshint())
     .pipe(jshint.reporter('jshint-stylish'));
 });
 
 gulp.task('build-js', function() {
-  return gulp.src('viewer/**/*.js')
+  return gulp.src(config.srcJs)
     .pipe(sourcemaps.init())
     .pipe(concat('bundle.js'))
     // only uglify if gulp is run with '--type production'
     .pipe(gutil.env.type == 'production' ? uglify() : gutil.noop())
     .pipe(sourcemaps.write())
-    .pipe(gulp.dest('dist/viewer/js'));
+    .pipe(gulp.dest(config.distJs));
 });
 
  // 'test': 'Tests the project'
