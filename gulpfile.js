@@ -53,7 +53,7 @@ gulp.task('proxy', function () {
   proxy.use('/proxy', proxypage.proxy);
 
   proxy.listen(port, function() {
-    console.log('Connect server listening on port ' + port);
+    console.log('Proxy server listening on port ' + port);
   });
 });
 
