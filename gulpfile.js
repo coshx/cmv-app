@@ -22,6 +22,7 @@ var autoprefixer = require('gulp-autoprefixer');
 var minifyCss = require('gulp-minify-css');
 
 var connect = require('gulp-connect');
+var realConnect = require('connect');
 //var Proxy = require('gulp-connect-proxy');
 var proxypage = require('proxypage');
 var bodyParser = require('body-parser');
@@ -42,26 +43,25 @@ var config = {
 
 // Copies html, builds javascript and css, runs jshint, watches for changes and runs a web server and opens default browser to preview.
 // TODO: Separate file copying for development and production
-gulp.task('default', ['copy-html', 'copy-js', 'watch', 'jshint', 'build-js', 'build-css'], function() {
+gulp.task('default', ['copy-html', 'copy-js', 'watch', 'jshint', 'build-js', 'build-css', 'proxy'], function() {
   // launch web server
   connect.server({
     port: 3000,
     root: 'viewer',
     livereload: true
   });
-  connect.server({
-    middleware: function(connect, opt) {
-      var app = connect();
-      var port = 3002;
-      app.use(bodyParser.text({ type: 'text/html' }));
-      app.use(bodyParser.json({ type: 'application/*+json' }));
+});
 
-      app.use('/proxy', proxypage.proxy);
+gulp.task('proxy', function () {
+  var app = realConnect();
+  var port = 3002;
+  app.use(bodyParser.text({ type: 'text/html' }));
+  app.use(bodyParser.json({ type: 'application/*+json' }));
 
-      app.listen(port, function() {
-        console.log('Connect server listening on port ' + port);
-      });
-    }
+  app.use('/proxy', proxypage.proxy);
+
+  app.listen(port, function() {
+    console.log('Connect server listening on port ' + port);
   });
 });
 
