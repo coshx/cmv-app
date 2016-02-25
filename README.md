@@ -14,13 +14,16 @@ A [reverse proxy](https://developers.arcgis.com/javascript/jshelp/ags_proxy.html
 5. Point your browser to http://localhost:3000 and start tinkering!
 
 ##Configuring FSJ for the CMV
+
 ###Configuring the Backend
 * To change the port that the map viewer runs on, simply change the port in the `defualt` task within `gulpfile.js`.
-* To change the port that the proxy runs on, change the port in the `proxy` task within `gulpfile.js`. **NOTE**: This will likely cause CORS exceptions unless further configuration is done. See **Configuring Reverse Proxy Rules**.
+* To change the port that the proxy runs on, change the port in the `proxy` task within `gulpfile.js`. **NOTE**: This will likely cause CORS exceptions unless further configuration is done. See [Configuring Reverse Proxy Rules](https://github.com/coshx/cmv-app#configuring-reverse-proxy-rules).
+
 ###Configuring Reverse Proxy Rules
 * Within `./viewer/js/config/viewer.js`, a `urlPrefix` can be mapped to the reverse proxy's `proxyUrl` to avoid CORS exceptions. The `proxyUrl` in the proxy rules should match the URL that the proxy runs on in the `gulpfile.js`.
+
 ###Loading Different Maps
-* Currently, FSJ for the CMV loads [NOAA hurricane tracks]('http://sampleserver3.arcgisonline.com/ArcGIS/rest/services/Hurricanes/NOAA_Tracks_1851_2007/MapServer/') from one of ESRI's sample servers. To change the operational layers that your map loads to [one of the other maps](http://sampleserver1.arcgisonline.com/ArcGIS/rest/services) on ESRI's servers, changing the `operationalLayers` within `./viewer/js/config/viewer.js` will load more layers. **NOTE**: You may need to add a proxy rule for the server that is providing your operational layers See **Configuring Reverse Proxy Rules** for more information.
+* Currently, FSJ for the CMV loads [NOAA hurricane tracks]('http://sampleserver3.arcgisonline.com/ArcGIS/rest/services/Hurricanes/NOAA_Tracks_1851_2007/MapServer/') from one of ESRI's sample servers. To change the operational layers that your map loads to [one of the other maps](http://sampleserver1.arcgisonline.com/ArcGIS/rest/services) on ESRI's servers, changing the `operationalLayers` within `./viewer/js/config/viewer.js` will load more layers. **NOTE**: You may need to add a proxy rule for the server that is providing your operational layers See [Configuring Reverse Proxy Rules](https://github.com/coshx/cmv-app#configuring-reverse-proxy-rules) for more information.
 
 ##Known Issues
 1. Code that configures some of the dojo widgets that ESRI provides is raising a CORS exception. We have not noticed any broken functionality as a result.
