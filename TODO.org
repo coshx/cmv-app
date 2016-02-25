@@ -1,8 +1,10 @@
 * TODO Edit gulpfile.js
-** Resources
 ** TODO Split into separate files
 *** Starter files: https://github.com/vigetlabs/gulp-starter
 *** Recipes: https://github.com/gulpjs/gulp/tree/master/docs/recipes
 ** TODO Separate development and deployment (get items out of 'default')
 *** Best practices: http://blog.rangle.io/angular-gulp-bestpractices/
 ** TODO Incorporate browserify front-end package management, if necessary
+** TODO Open browser when connect server is launched
+* TODO Rewrite README.md
+* TODO Add testing to gulp task runner
