@@ -35,7 +35,9 @@ gulp.task('default', ['copy-html',
                       'jshint',
                       'build-js',
                       'build-css',
-                      'proxy'], function() {
+                      'proxy',
+                      'mocha',
+                      'watch-mocha'], function() {
   // launch web server
   gulpConnect.server({
     port: 3000,
@@ -101,13 +103,13 @@ gulp.task('build-js', function() {
 });
 
 gulp.task('mocha', function() {
-  return gulp.src(['test/*.js'], { read: false })
-    .pipe(mocha({ reporter: 'list' }))
+  return gulp.src(['test/**/*.js'], { read: false })
+    .pipe(mocha({ reporter: 'spec' }))
     .on('error', gutil.log);
 });
 
 gulp.task('watch-mocha', function() {
-  gulp.watch(['lib/**', 'test/**'], ['mocha']);
+  gulp.watch(['viewer/**', 'test/**'], ['mocha']);
 });
 
 // bundles javascript for browserify -not currently used
