@@ -17,7 +17,7 @@ var bodyParser = require('body-parser');
 // var source = require('vinyl-source-stream');
 // var browserify = require('gulp-browserify');
 var uglify = require('gulp-uglify');
-var mocha = require('gulp-mocha');
+var Server = require('karma').Server;
 
 var config = {
   srcCss : 'viewer/css/**/*.css',
@@ -36,8 +36,7 @@ gulp.task('default', ['copy-html',
                       'build-js',
                       'build-css',
                       'proxy',
-                      'mocha',
-                      'watch-mocha'], function() {
+                      'test'], function() {
   // launch web server
   gulpConnect.server({
     port: 3000,
@@ -102,14 +101,11 @@ gulp.task('build-js', function() {
     .pipe(gulp.dest(config.distJs));
 });
 
-gulp.task('mocha', function() {
-  return gulp.src(['test/**/*.js'], { read: false })
-    .pipe(mocha({ reporter: 'spec' }))
-    .on('error', gutil.log);
-});
-
-gulp.task('watch-mocha', function() {
-  gulp.watch(['viewer/**', 'test/**'], ['mocha']);
+gulp.task('test', function(done) {
+  new Server({
+    configFile: __dirname + '/karma.conf.js',
+    singleRun: true
+  }, done).start();
 });
 
 // bundles javascript for browserify -not currently used
