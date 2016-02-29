@@ -105,11 +105,22 @@ gulp.task('build-js', function() {
     .pipe(gulp.dest(config.distJs));
 });
 
-gulp.task('e2e-tests', ['default'], function () {
+gulp.task('e2e-tests', ['proxy'], function () {
+  // launch static web server
+  gulpConnect.server({
+    port: 3000,
+    root: 'viewer',
+    livereload: true
+  });
+
   return gulp.src('')
     .pipe(nightwatch({
       configFile: 'nightwatch.json'
-    }));
+    }))
+    .on('error', function(error) {
+      gutill.log(error);
+      gulpConnect.serverClose();
+    })
 });
 
 // bundles javascript for browserify -not currently used
