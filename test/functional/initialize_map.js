@@ -11,22 +11,16 @@ module.exports = {
     client.end();
   },
 
-  'HTML body is present' : function(client) {
+  'Basic HTML loads' : function(client) {
     client.expect.element('body').to.be.present;
-  },
-
-  'Page title is correct' : function(client) {
-    // expect 'Hurricane Tracker' in the title
-    // client.expect.element('title').text.to.have.value.that.equals('Hurricane Tracker');
     client.assert.title('Hurricane Tracker');
   },
 
-  'Map is centered on the United States' : function(client) {
+  'Specific panes load' : function(client) {
+    client.expect.element('div#sidebarLeft').to.be.present;
   },
 
-  'Collapsed sidebar panes load' : function(client) {
-  },
-
-  'Universal search bar loads' : function(client) {}
-
+  'Widgets load' : function(client) {
+    client.expect.element('div#geocoder_widget').to.be.present;
+  }
 };
