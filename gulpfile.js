@@ -14,12 +14,12 @@ var connect = require('connect');
 var proxypage = require('proxypage');
 var bodyParser = require('body-parser');
 
-// var source = require('vinyl-source-stream');
-// var browserify = require('gulp-browserify');
 var uglify = require('gulp-uglify');
 
 var mocha = require('gulp-mocha');
-var nightwatch = require('gulp-nightwatch');
+var browserSync = require('browser-sync');
+var webdriver = require('gulp-webdriver');
+var selenium = require('selenium-standalone');
 
 var config = {
   srcCss : 'viewer/css/**/*.css',
@@ -41,9 +41,14 @@ gulp.task('default', ['watch', 'jshint', 'proxy'], function() {
 });
 
 // Runs e2e tests with selenium, then runs unit tests with mocha.
-gulp.task('test', ['e2e-tests'], function () {
-  return gulp.src('test/unit/*.js', {read: false})
-    .pipe(mocha({reporter: 'spec'}));
+gulp.task('test', ['integration'], function () {
+  selenium.child.kill();
+  browserSync.exit();
+});
+
+gulp.task('integration', ['serve:test', 'selenium'], function () {
+  return gulp.src('test/**/*.js', {read: false})
+    .pipe(mocha());
 });
 
 // Copies html, builds javascript and css
@@ -105,31 +110,29 @@ gulp.task('build-js', function() {
     .pipe(gulp.dest(config.distJs));
 });
 
-gulp.task('e2e-tests', ['proxy'], function () {
-  // launch static web server
-  gulpConnect.server({
-    port: 3000,
-    root: 'viewer',
-    livereload: true
-  });
-
-  return gulp.src('')
-    .pipe(nightwatch({
-      configFile: 'nightwatch.json'
-    }))
-    .on('error', function(error) {
-      gutill.log(error);
-      gulpConnect.serverClose();
-    })
+gulp.task('serve:test', function (done) {
+  browserSync({
+    logLevel: 'silent',
+    notify: false,
+    open: false,
+    port: 9000,
+    server: {
+      baseDir: ['test']
+    },
+    ui: false
+  }, done);
 });
 
-// bundles javascript for browserify -not currently used
-gulp.task('bundle-js', function() {
-  browserify('./viewer/js/**/*.js')
-    .bundle()
-    .on('error', function(error) {
-      gutil.log(error);
-    })
-    .pipe(source('bundle.js'))
-    .pipe(gulp.dest('./viewer/js/dist'))
+gulp.task('selenium', function (done) {
+  selenium.install({
+    logger: function (message) { }
+  }, function (err) {
+    if (err) return done(err);
+
+    selenium.start(function (err, child) {
+      if (err) return done(err);
+      selenium.child = child;
+      done();
+    });
+  });
 });

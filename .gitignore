@@ -4,6 +4,7 @@ node_modules
 stash
 reports
 .idea
+gulp-tasks
 
 #################
 ## Eclipse
