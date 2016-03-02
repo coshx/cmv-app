@@ -46,7 +46,7 @@ gulp.task('test', ['integration'], function () {
   browserSync.exit();
 });
 
-gulp.task('integration', ['serve:test', 'selenium'], function () {
+gulp.task('integration', ['serve:test', 'selenium', 'default'], function () {
   return gulp.src('test/**/*.js', {read: false})
     .pipe(mocha());
 });
