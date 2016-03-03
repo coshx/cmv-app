@@ -1,27 +1,24 @@
 var chai = require('chai');
 var assert = chai.assert;
 var expect = chai.expect;
-var should = chai.should;
+chai.use(require('chai-as-promised'));
 var webdriverio = require('webdriverio');
 
 describe('Map loads correctly', function() {
-  this.timeout(99999);
-  var client = {};
-
-  before(function(done) {
-    client = webdriverio.remote({ desiredCapabilities: { browserName: 'firefox' } });
-    client
-      .init()
-      .url('http://localhost:3000')
-      .call(done);
-  });
+  this.timeout(999999);
+  var client = webdriverio.remote({ desiredCapabilities: { browserName: 'chrome' } });
 
   it('HTML should load', function(done) {
     client
-      //.expect.element('body').to.be.present
-      .getTitle(function(err, title) {
-        assert.equal(undefined, err);
-        assert.strictEqual(title, 'Hurricane Tracker');
+      .init()
+      .url('http://localhost:3000')
+      .getTitle()
+      .then(function(title) {
+        assert.equal(title, 'Hurricane Tracker');
+      })
+      .getHTML('body')
+      .then(function(body){
+        assert.isDefined(body);
       })
       .call(done);
   });
