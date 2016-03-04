@@ -63,7 +63,8 @@ define([
     // operationalLayers: Array of Layers to load on top of the basemap: valid 'type' options: 'dynamic', 'tiled', 'feature'.
     // The 'options' object is passed as the layers options for constructor. Title will be used in the legend only. id's must be unique and have no spaces.
     // 3 'mode' options: MODE_SNAPSHOT = 0, MODE_ONDEMAND = 1, MODE_SELECTION = 2
-    operationalLayers: [ {
+    operationalLayers: [
+      {
       type: 'dynamic',
       url: 'http://sampleserver3.arcgisonline.com/ArcGIS/rest/services/Hurricanes/NOAA_Tracks_1851_2007/MapServer/',
       title: 'Hurricane Tracks 1851-2007',
@@ -72,6 +73,17 @@ define([
         opacity: 1.0,
         visible: true,
         outFields: ['BTID', 'NAME', 'LAT', 'LONG', 'WIND_KTS', 'CAT', 'PRESSURE'],
+        mode: 0
+      }},
+      {
+      type: 'dynamic',
+      url: 'http://sampleserver3.arcgisonline.com/ArcGIS/rest/services/BloomfieldHillsMichigan/Parcels/MapServer/',
+      title: 'Bloomfield, Michigan Parcels',
+      options: {
+        id: 'bloomfieldParcels',
+        opacity: 1.0,
+        visible: true,
+        outFields: ['NGHBRHDCD', 'PARCELID', 'LOWPARCELID'],
         mode: 0
       }
     }],
@@ -361,6 +373,17 @@ define([
           mapClickMode: true,
           mapRightClickMenu: true
         }
+      },
+      findById: {
+        include: true,
+        id: 'findById',
+        type: 'titlePane',
+        canFloat: true,
+        path: 'gis/dijit/FindById',
+        title: 'Find by ID',
+        open: false,
+        position: 10,
+        options: 'config/findById'
       },
       help: {
         include: true,
