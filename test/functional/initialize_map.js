@@ -1,43 +1,26 @@
-var chai = require('chai');
-var assert = chai.assert;
+describe('The landing page', function() {
 
-describe('my awesome website', function() {
-    it('should do some chai assertions', function(done) {
-      return browser
-        .url('http://localhost:3000', done)
-        .getTitle().should.eventually.be.equal('Hurricane Tracker');
-    });
+  it('should show "Hurricane Tracker" as its title.', function() {
+    return browser
+      .url('/')
+      .getTitle().should.eventually.be.equal('Hurricane Tracker');
+  });
 
-// describe('Map loads correctly', function() {
+  it('should load some body text.', function() {
+    return browser
+      .url('/')
+      .getHTML('body').should.eventually.exist;
+  });
 
-//   it('HTML should load', function(done) {
-//     return browser
-//       .url('http://google.com')
-//       .getTitle().then(function(title) {
-//         console.log('\n**************\n' + title);
-//       });
-    // browser
-    //   .url('http://localhost:3000')
-    //   .getTitle()
-    //   .then(function(title) {
-    //     assert.equal(title, 'Hurricane Tracker');
-    //   })
-    //   .getHTML('body')
-    //   .then(function(body){
-    //     assert.isDefined(body);
-    //   })
-    //   .call(done);
-  // });
+  it('should load the left sidebar.', function() {
+    return browser
+      .url('/')
+      .getHTML('#sidebarLeft').should.eventually.exist;
+  });
 
+  it('should load the geocoder widget.', function() {
+    return browser
+      .url('/')
+      .getHTML('#geocoder_widget').should.eventually.exist;
+  });
 });
-
-/*
-
-  'Specific panes load' : function(client) {
-    client.expect.element('div#sidebarLeft').to.be.present;
-  },
-
-  'Widgets load' : function(client) {
-    client.expect.element('div#geocoder_widget').to.be.present;
-  }
- */
