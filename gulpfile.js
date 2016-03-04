@@ -16,8 +16,6 @@ var bodyParser = require('body-parser');
 
 var uglify = require('gulp-uglify');
 
-var mocha = require('gulp-mocha');
-var browserSync = require('browser-sync');
 var webdriver = require('gulp-webdriver');
 var selenium = require('selenium-standalone');
 
@@ -41,14 +39,8 @@ gulp.task('default', ['watch', 'jshint', 'proxy'], function() {
 });
 
 // Runs e2e tests with selenium, then runs unit tests with mocha.
-gulp.task('test', ['integration'], function () {
+gulp.task('test', ['serve:test'], function () {
   selenium.child.kill();
-  browserSync.exit();
-});
-
-gulp.task('integration', ['serve:test', 'selenium', 'default'], function () {
-  return gulp.src('test/**/*.js', {read: false})
-    .pipe(mocha());
 });
 
 // Copies html, builds javascript and css
@@ -110,17 +102,12 @@ gulp.task('build-js', function() {
     .pipe(gulp.dest(config.distJs));
 });
 
-gulp.task('serve:test', function (done) {
-  browserSync({
-    logLevel: 'silent',
-    notify: false,
-    open: false,
-    port: 9000,
-    server: {
-      baseDir: ['test']
-    },
-    ui: false
-  }, done);
+gulp.task('serve:test', ['selenium', 'default'], function (done) {
+  return gulp.src('wdio.conf.js').pipe(webdriver({
+    logLevel: 'verbose',
+    waitforTimeout: 10000,
+    reporter: 'spec'
+  }));
 });
 
 gulp.task('selenium', function (done) {

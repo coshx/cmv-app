@@ -28,6 +28,7 @@
     "proxypage": "^0.1.1",
     "requirejs": "^2.1.22",
     "selenium-standalone": "^5.0.0",
+    "wdio-mocha-framework": "^0.2.11",
     "webdriverio": "^4.0.3"
   }
 }

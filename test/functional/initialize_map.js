@@ -1,34 +1,34 @@
 var chai = require('chai');
 var assert = chai.assert;
-var expect = chai.expect;
-chai.use(require('chai-as-promised'));
-var webdriverio = require('webdriverio');
 
-describe('Map loads correctly', function() {
-  this.timeout(999999);
-  var client = webdriverio.remote({ desiredCapabilities: { browserName: 'chrome' } });
+describe('my awesome website', function() {
+    it('should do some chai assertions', function(done) {
+      return browser
+        .url('http://localhost:3000', done)
+        .getTitle().should.eventually.be.equal('Hurricane Tracker');
+    });
 
-  it('HTML should load', function(done) {
-    client
-      .init()
-      .url('http://localhost:3000')
-      .getTitle()
-      .then(function(title) {
-        assert.equal(title, 'Hurricane Tracker');
-      })
-      .getHTML('body')
-      .then(function(body){
-        assert.isDefined(body);
-      })
-      .call(done);
-  });
+// describe('Map loads correctly', function() {
 
-  after(function(done) {
-    console.log('Closing down functional tests...');
-    client
-      .end()
-      .call(done);
-  });
+//   it('HTML should load', function(done) {
+//     return browser
+//       .url('http://google.com')
+//       .getTitle().then(function(title) {
+//         console.log('\n**************\n' + title);
+//       });
+    // browser
+    //   .url('http://localhost:3000')
+    //   .getTitle()
+    //   .then(function(title) {
+    //     assert.equal(title, 'Hurricane Tracker');
+    //   })
+    //   .getHTML('body')
+    //   .then(function(body){
+    //     assert.isDefined(body);
+    //   })
+    //   .call(done);
+  // });
+
 });
 
 /*
