@@ -189,8 +189,6 @@ define(
           var url = this.getQueryInput().query.url;
           var findParams = this.getFindParams();
           var findTask = new FindTask(url);
-          console.log('***findParams***\n', findParams);
-          console.log('***findTask***\n', findTask);
           findTask.execute(findParams, lang.hitch(this, this.showResults));
         },
         getQueryInput: function () {
