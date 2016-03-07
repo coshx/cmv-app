@@ -34,20 +34,20 @@ A [reverse proxy](https://developers.arcgis.com/javascript/jshelp/ags_proxy.html
 ##Developing Widgets
 Adapting an existing widget for new purposes is mostly a matter of configuration. The general workflow requires editing the following files:
 * `viewer.js`
-  1. Make sure that necessary fields are made available in the `outFields` field of the `operationalLayers` parameter. This will be necessary for any search functionality being implemented. The available fields for a particular layer can be found at the [sample server's page](http://sampleserver3.arcgisonline.com/ArcGIS/rest/services/Hurricanes/NOAA_Tracks_1851_2007/MapServer//0).
-  2. Register the new widget under the `widgets` parameter.
+  * Make sure that necessary fields are made available in the `outFields` field of the `operationalLayers` parameter. This will be necessary for any search functionality being implemented. The available fields for a particular layer can be found at the [sample server's page](http://sampleserver3.arcgisonline.com/ArcGIS/rest/services/Hurricanes/NOAA_Tracks_1851_2007/MapServer//0).
+  * Register the new widget under the `widgets` parameter.
     * `id`: the widget's identifier
     * `type`: where the widget is located
     * `path`: where the widget configuration folder is located
     * `position`: the order of a widget located in the sidebar
     * `options`: where the widget's configuration options are located
 * `./viewer/js/config/[widgetName].js`
-  1. Provide any options that the widget will need in order to run.
+  * Provide any options that the widget will need in order to run.
 * `./viewer/js/gis/dijit/[WidgetName]/`
-  1. Update the CSS files in `css`
-  2. Update the HTML templates in `html`
+  * Update the CSS files in `css`
+  * Update the HTML templates in `html`
 * `./viewer/js/gis/dijit/[widgetName].js`
-  1. Update the functions available to your custom widget.
+  * Update the functions available to your custom widget.
 
 ##Known Issues
 1. Code that configures some of the dojo widgets that ESRI provides is raising a CORS exception. We have not noticed any broken functionality as a result.
