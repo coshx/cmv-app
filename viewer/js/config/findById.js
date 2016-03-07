@@ -3,7 +3,7 @@ define({
   zoomExtentFactor: 2,
   queries: [
     {
-      description: 'Find hurricane traces by year',
+      description: 'Search all objects by id',
       url: 'http://sampleserver3.arcgisonline.com/ArcGIS/rest/services/BloomfieldHillsMichigan/Parcels/MapServer/',
       layerIds: [0, 1, 2],
       searchFields: ['OBJECTID'],
