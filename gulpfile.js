@@ -102,12 +102,9 @@ gulp.task('build-js', function() {
     .pipe(gulp.dest(config.distJs));
 });
 
-gulp.task('serve:test', ['selenium', 'default'], function (done) {
-  return gulp.src('wdio.conf.js').pipe(webdriver({
-    logLevel: 'verbose',
-    waitforTimeout: 10000,
-    reporter: 'spec'
-  }));
+gulp.task('serve:test', ['selenium', 'default'], function () {
+  // reporter, timeout, and log settings in wdio.conf.js
+  return gulp.src('wdio.conf.js').pipe(webdriver());
 });
 
 gulp.task('selenium', function (done) {
