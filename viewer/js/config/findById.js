@@ -4,7 +4,8 @@ define({
   queries: [
     {
       description: 'Search all objects by id',
-      url: 'http://sampleserver3.arcgisonline.com/ArcGIS/rest/services/BloomfieldHillsMichigan/Parcels/MapServer/',
+      url: ['http://sampleserver3.arcgisonline.com/ArcGIS/rest/services/BloomfieldHillsMichigan/Parcels/MapServer/',
+            'http://sampleserver3.arcgisonline.com/ArcGIS/rest/services/BloomfieldHillsMichigan/LandusePlanning/MapServer'],
       layerIds: [0, 1, 2],
       searchFields: ['OBJECTID'],
       minChars: 1,
