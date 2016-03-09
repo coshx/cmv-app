@@ -349,7 +349,7 @@ define(
         },
         showResults: function (results) {
           if (this.results === undefined) {
-            this.results = []
+            this.results = [];
           }
           this.results = this.results.concat(results);
 
