@@ -186,6 +186,7 @@ define(
           this.executeFindTask();
         },
         executeFindTask: function () {
+          this.results = [];
           var url = this.getQueryInput().query.url;
           var findParams = this.getFindParams();
           for (var i = 0; i < url.length; i++) {
@@ -347,8 +348,12 @@ define(
           this.currentQueryEventHandlers = queryEventHandlers;
         },
         showResults: function (results) {
+          if (this.results === undefined) {
+            this.results = []
+          }
+          this.results = this.results.concat(results);
+
           var resultText = this.i18n.noResultsLabel;
-          this.results = results;
           if (this.results.length > 0) {
             var s = (this.results.length === 1) ? '' : this.i18n.resultsLabel.multipleResultsSuffix;
             resultText = this.results.length + ' ' + this.i18n.resultsLabel.labelPrefix + s + ' ' + this.i18n.resultsLabel.labelSuffix;
