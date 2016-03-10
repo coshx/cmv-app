@@ -1,17 +1,10 @@
 define({
   map: true,
   zoomExtentFactor: 2,
-  // grabLayerUrls: function() {
-  //   console.log("*****\nPrinting this.map: ", this.map);
-  // },
-  // searchForObjectIds: function() {
-
-  // },
   queries: [
     {
       description: 'Search all objects by id',
-      url: ['http://sampleserver3.arcgisonline.com/ArcGIS/rest/services/BloomfieldHillsMichigan/Parcels/MapServer/',
-            'http://sampleserver3.arcgisonline.com/ArcGIS/rest/services/BloomfieldHillsMichigan/LandusePlanning/MapServer'],
+      // url: ['http://sampleserver3.arcgisonline.com/ArcGIS/rest/services/BloomfieldHillsMichigan/Parcels/MapServer/', 'http://sampleserver3.arcgisonline.com/ArcGIS/rest/services/BloomfieldHillsMichigan/LandusePlanning/MapServer'],
       layerIds: [0, 1, 2],
       searchFields: ['OBJECTID'],
       minChars: 1,

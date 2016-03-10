@@ -127,6 +127,7 @@ define(
           this.updateSearchPrompt();
         },
         initializeGlobalVariables: function () {
+          this.urls = this.getLayerUrls();
           this.queryIdx = 0;
           this.currentQueryEventHandlers = [];
           this.gridColumns = null;
@@ -142,6 +143,19 @@ define(
           if (!this.pointExtentSize) {
             this.pointExtentSize = this.spatialReference === 4326 ? 0.0001 : 25;
           }
+        },
+        getLayerUrls: function() {
+          var urls = [];
+          for (var layer in app.layers) {
+            try {
+              var url = app.layers[layer].url;
+              urls.push(url);
+            }
+            catch(err) {
+              console.log("****\nLayer " + layer + " doesn't have url:\n" + err);
+            }
+          }
+          return urls;
         },
         addKeyUpHandlerToSearchInput: function () {
           this.own(
@@ -187,10 +201,9 @@ define(
         },
         executeFindTask: function () {
           this.results = [];
-          var url = this.getQueryInput().query.url;
           var findParams = this.getFindParams();
-          for (var i = 0; i < url.length; i++) {
-            var findTask = new FindTask(url[i]);
+          for (var i = 0; i < this.urls.length; i++) {
+            var findTask = new FindTask(this.urls[i]);
             findTask.execute(findParams, lang.hitch(this, this.showResults));
           }
         },
@@ -202,7 +215,7 @@ define(
         },
         queryConfigurationIsInvalid: function () {
           var query = this.getQueryInput().query;
-          if (!query.url || !query.searchFields || !query.layerIds) {
+          if (!this.urls || !query.searchFields || !query.layerIds) {
             return true;
           }
           return false;
