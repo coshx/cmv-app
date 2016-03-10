@@ -1,6 +1,12 @@
 define({
   map: true,
   zoomExtentFactor: 2,
+  // grabLayerUrls: function() {
+  //   console.log("*****\nPrinting this.map: ", this.map);
+  // },
+  // searchForObjectIds: function() {
+
+  // },
   queries: [
     {
       description: 'Search all objects by id',
@@ -21,16 +27,16 @@ define({
           descending: false
         }
       ],
-      prompt: 'Enter an objectID',
-      customGridEventHandlers: [
-        {
-          event: '.dgrid-row:click',
-          handler: function ( event ) {
-            alert( 'You clicked a row!' );
-            console.log( event );
-          }
-        }
-      ]
+      prompt: 'Enter an objectID'
+      // customGridEventHandlers: [
+      //   {
+      //     event: '.dgrid-row:click',
+      //     handler: function ( event ) {
+      //       alert( 'You clicked a row!' );
+      //       console.log( event );
+      //     }
+      //   }
+      // ]
     }
   ],
   selectionSymbols: {
